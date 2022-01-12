@@ -42,6 +42,11 @@
 					email: '',
 					password: '',
 				},
+				submitParam:{
+					phone: '',
+					email: '',
+					password: '',
+				},
 				checked: true,
 				text: '向右滑',
 				accuracy: 4,
@@ -100,24 +105,28 @@
 				this.$router.push('/Regist');
 			},
 			doSubmit: function() {
-				let regemail = /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-				if (regemail.test(this.phone)) {
-					this.email = this.username;
-					this.phone = '';
-					
-				}
 				this.$refs.userLoginParam.validate((valid) => {
 					if (valid) {
 						if (this.succeed) {
+							var regemail =/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+							if(regemail.test(this.userLoginParam.phone)) {
+								this.submitParam.email = this.userLoginParam.phone;
+								this.submitParam.password = this.userLoginParam.password;
+								this.submitParam.phone = '';
+							}else{
+								this.submitParam.phone = this.userLoginParam.phone;
+								this.submitParam.password = this.userLoginParam.password;
+								this.submitParam.email = '';
+							}
+
 							this.loading = true;
 							//没有用封装的方法是因为路由特殊所以需要单独写
-							this.postRequest('/login', this.userLoginParam).then(resp => {
+							this.postRequest('/login',this.submitParam).then(resp => {
 								this.loading = false;
 								if (resp) {
-
-									//存储用户token
-									const token = resp.data.tokenHead + resp.data.token;
-									window.sessionStorage.setItem('token', token);
+									this.setCookieValue("userid",resp.data.id);
+									console.log(resp.data)
+									console.log(this.getCookieValue("userid"))
 									//跳转首页
 									this.$router.replace('/Home')
 								}
@@ -125,7 +134,7 @@
 							})
 						} else {
 							this.$message({
-								message: '请先通过验证',
+								message: '请先通过验证后再次点击登录',
 								type: 'warning'
 							});
 							this.toverify = true;
