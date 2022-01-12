@@ -6,8 +6,8 @@ import router from '../router'
 //请求拦截器
 axios.interceptors.request.use(config=>{
 	//如果存在token，请求携带这个token
-	if(window.sessionStorage.getItem('tokenStr')){
-		config.headers['Authorization'] = window.sessionStorage.getItem('tokenStr');
+	if(window.sessionStorage.getItem('token')){
+		config.headers['token'] = window.sessionStorage.getItem('token');
 	}
 	return config;
 },error=>{
@@ -31,7 +31,7 @@ axios.interceptors.response.use((success)=>{
 	}else if(error.response.code==403){
 	}else if(error.response.code == 401){
 		Message.error({message:'尚未登陆，请登录'});
-		router.replace('/userlogin');
+		router.replace('/Login');
 	}else{
 		if(error.response.data.message){
 			Message.error({message:error.response.data.message});

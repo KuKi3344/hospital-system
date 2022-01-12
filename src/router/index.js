@@ -27,6 +27,11 @@ const routes = [
 	 component:Login
  },
  {
+ 	 path:'/home',
+ 	 name:'主页',
+ 	 component:Home
+ },
+ {
 	 path:'/Regist',
 	 name:'注册',
 	 component:Regist

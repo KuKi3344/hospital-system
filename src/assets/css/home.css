@@ -1,0 +1,43 @@
+.el-header{
+	background-color: rgba(55, 64, 81, 0.8);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	
+}
+.titleleft,
+.right{
+	margin-left: 20px;
+	color: #dedede;
+	letter-spacing: 2px;
+}
+.titleleft{
+	font-size: 20px;
+}
+.right{
+	font-size: 15px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+#nav{
+	display: inline-block;
+	font-size: 14px;
+	margin-right: 5px;
+	color: #ffffff;
+	
+}
+.el-aside{
+	background-color: #fff;
+		box-shadow: 10px 10px 20px rgb(0 0 0 / 10%);
+		border-radius: 10px;
+		margin:15px;
+		height:400px;
+}
+.el-main{
+			background-color: #fff;
+			box-shadow: 10px 10px 20px rgb(0 0 0 / 10%);
+			border-radius: 10px;
+			margin:15px;
+			height:400px;
+	}

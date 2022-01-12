@@ -5,8 +5,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import SlideVerify from 'vue-monoplasty-slide-verify';
 import VueParticles from 'vue-particles';
-import store from './store';
-import {initMenu} from './utils/menus';
+// import store from './store';
+// import {initMenu} from './utils/menus';
 import axios from 'axios'
 
 import{
@@ -31,8 +31,8 @@ Vue.prototype.deleteRequest = deleteRequest;
 //准备一个路由前置导航守卫
 router.beforeEach((to,from,next)=>{
 	//如果有token，不拦截
-	if(window.sessionStorage.getItem('tokenStr')){
-		initMenu(router,store);
+	if(window.sessionStorage.getItem('token')){
+		// initMenu(router,store);
 		//通过前置路由守卫获取用户信息
 			//判断用户信息是否存在不存在就去获取
 		if(!window.sessionStorage.getItem('user')){
@@ -46,7 +46,7 @@ router.beforeEach((to,from,next)=>{
 		next();
 	}else{
 		//如果没有token就拦截，如果去登录页面不拦截，如果去别的就给调到404页面
-		if(to.path=='/'||to.path=='/Login'||to.path=='/404'||to.path=='/Regist'){
+		if(to.path=='/'||to.path=='/Login'||to.path=='/404'||to.path=='/Regist'||to.path=='/home'){
 			next();
 		}
 		else{
@@ -59,6 +59,5 @@ router.beforeEach((to,from,next)=>{
 
 new Vue({
   router,
-  store,
   render: h => h(App)
 }).$mount('#app')
