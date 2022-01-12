@@ -1,18 +1,22 @@
 import axios from 'axios'
 import { Message } from 'element-ui';
 import router from '../router'
-
+import {
+	getCookieValue,
+	setCookieValue,
+	clearCookie
+}from '../assets/js/cookie_utils.js'
 
 //请求拦截器
-axios.interceptors.request.use(config=>{
-	//如果存在token，请求携带这个token
-	if(window.sessionStorage.getItem('token')){
-		config.headers['token'] = window.sessionStorage.getItem('token');
-	}
-	return config;
-},error=>{
-	console.log(error);
-})
+// axios.interceptors.request.use(config=>{
+// 	//如果存在token，请求携带这个token
+// 	if(getCookieValue("oars-token")){
+// 		config.headers['oars-token'] = getCookieValue("oars-token");
+// 	}
+// 	return config;
+// },error=>{
+// 	console.log(error);
+// })
 //配置响应拦截器
 axios.interceptors.response.use((success)=>{
 	//业务逻辑错误
@@ -41,6 +45,7 @@ axios.interceptors.response.use((success)=>{
 	}
 	return;
 });
+
 let base = ''; //很多是需要通过/api来调用接口的，方便反向代理直接匹配/api，把访问本地地址/api转到后端接口地址/api
 //传送json格式的post请求
 export const postRequest = (url,params)=>{
