@@ -30,7 +30,6 @@
 							<el-button type="primary" size="medium" style="margin-right: 25px;" @click="clickedit">编辑
 							</el-button>
 						</template>
-						<el-descriptions-item label="用户id">{{user.id}}</el-descriptions-item>
 						<el-descriptions-item label="用户名">{{user.name}}</el-descriptions-item>
 						<el-descriptions-item label="手机号">{{user.phone}}</el-descriptions-item>
 						<el-descriptions-item label="邮箱">{{user.email}}</el-descriptions-item>
@@ -39,14 +38,12 @@
 							<el-tag size="small">{{user.birthday}}</el-tag>
 						</el-descriptions-item>
 						<el-descriptions-item label="身份证">{{user.idCard}}</el-descriptions-item>
+						<el-descriptions-item label="描述">{{remark}}</el-descriptions-item>
 					</el-descriptions>
 					
 					<el-dialog style="width: 900px;height:900px;" title="个人信息编辑" :visible.sync="showedit"
 						append-to-body top="10px">
 						<el-form :model="editList">
-							<el-form-item label="用户id" width="150px">
-								<el-input class="dialog_input" v-model="editList.id"></el-input>
-							</el-form-item>
 							<el-form-item label="用户名" width="150px">
 								<el-input class="dialog_input" v-model="editList.name"></el-input>
 							</el-form-item>
@@ -64,6 +61,9 @@
 							</el-form-item>
 							<el-form-item label="身份证" width="150px">
 								<el-input class="dialog_input" v-model="editList.idCard"></el-input>
+							</el-form-item>
+							<el-form-item label="描述" width="150px">
+								<el-input class="dialog_input" v-model="editList.remark"></el-input>
 							</el-form-item>
 						</el-form>
 
@@ -94,18 +94,11 @@
 		data() {
 
 			return {
-				user: '',
+				user: {},
 				userid: '',
 				showedit: false,
-				editList:{
-					id:'',
-					name:'',
-					phone:'',
-					email:'',
-					idCard:'',
-					birthday:'',
-					address:''
-				}
+				editList:{},
+				remark:'',
 			}
 		},
 		components: {
@@ -146,6 +139,7 @@
 				sn.parentNode.insertBefore(c, sn);
 				sn.parentNode.insertBefore(s, sn);
 			})(document);
+			
 			if (!this.getCookieValue("userid")) {
 				this.$router.replace('/Login');
 			}
@@ -153,7 +147,12 @@
 			this.userid = this.getCookieValue("userid");
 			this.getRequest('/api/user/select/one/' + this.userid).then(resp => {
 				this.user = resp.data;
-				this.setCookieValue("roleid", this.user.roleMark)
+				this.setCookieValue("roleid", this.user.roleMark);
+				if(this.user.remark==''){
+					this.remark = '暂无'
+				}else{
+					this.remark = this.user.remark;
+				}
 			})
 		},
 		methods: {
@@ -162,17 +161,32 @@
 					this.postRequest('/logout').then(resp => {
 						this.clearCookie("roleid");
 						this.clearCookie("userid");
-						this.$router.push('/Login');
+						this.$router.replace('/Login');
 					})
 				}
 			},
 			clickedit() {
-				this.showedit = true
+				this.getRequest('/api/user/select/one/' + this.userid).then(resp => {
+					this.user = resp.data;
+					this.editList = resp.data;
+					this.setCookieValue("roleid", this.user.roleMark)
+					this.showedit = true;
+				})
 			},
 			edit() {
-				//1.发送请求
+				//1.发送请求把editList传回去
 				//2.刷新
-				this.flushed(); 
+				this.putRequest('/api/user/update',this.editList).then(resp=>{
+					this.user = resp.data;
+					if(this.user.remark == '' || this.user.remark==null){
+						this.remark = '暂无';
+					}
+					else{
+						this.remark = this.user.remark;
+					}
+					this.setCookieValue("roleid", this.user.roleMark)
+					this.showedit = false;
+				})
 				
 			},
 			flushed(){

@@ -27,7 +27,7 @@
 	box-shadow: 0 15px 25px rgba(212, 212, 212, 0.8);
 }
 .el-input{
-	margin-bottom: 5px;
+	margin-bottom: 0px;
 }
 .input_span span {
 		display: inline-block;

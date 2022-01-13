@@ -177,6 +177,7 @@
 						// this.postRequest('/login',this.userLoginParam).then(resp=>{
 						// 	this.loading = false;
 						// 	if(resp){
+							this.$router.push('/Login');
 
 					} else {
 						this.$message.error('输入格式错误，请检查！')
