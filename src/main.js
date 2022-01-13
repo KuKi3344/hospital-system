@@ -44,9 +44,6 @@ router.beforeEach((to,from,next)=>{
 		// initMenu(router,store);
 		//通过前置路由守卫获取用户信息
 			//判断用户信息是否存在不存在就去获取
-			if(!getCookieValue("user")){
-				next({ path: '/Login' })
-			}
 		next();
 	}else{
 		//如果没有token就拦截，如果去登录页面不拦截，如果去别的就给调到404页面

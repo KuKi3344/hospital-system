@@ -41,3 +41,14 @@
 			margin:15px;
 			height:400px;
 	}
+	.el-descriptions-item{
+		margin-bottom: 10px;
+	}
+	.el-descriptions{
+		margin-left:30px;
+		margin-top:20px;
+	}
+	  .el-dropdown-link {
+	    cursor: pointer;
+	    color: #ffffff;
+	  }

@@ -125,7 +125,6 @@
 								this.loading = false;
 								if (resp) {
 									this.setCookieValue("userid",resp.data.id);
-									console.log(resp.data)
 									console.log(this.getCookieValue("userid"))
 									//跳转首页
 									this.$router.replace('/Home')

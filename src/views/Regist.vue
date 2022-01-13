@@ -6,8 +6,8 @@
 			clickMode="push" class="lizi">
 		</vue-particles>
 		<el-form :rules="rules" ref="userRegistParam" :model="userRegistParam" class="registbox">
-			<el-form-item prop="username">
-				<el-input type="text" v-model="userRegistParam.username" placeholder="请输入用户名">
+			<el-form-item prop="name">
+				<el-input type="text" v-model="userRegistParam.name" placeholder="请输入姓名">
 				</el-input>
 			</el-form-item>
 			<el-form-item prop="phone">
@@ -16,6 +16,10 @@
 			</el-form-item>
 			<el-form-item prop="email">
 				<el-input type="email" v-model="userRegistParam.email" placeholder="请输入邮箱">
+				</el-input>
+			</el-form-item>
+			<el-form-item prop="idCard">
+				<el-input type="text" v-model="userRegistParam.idCard" placeholder="请输入身份证号码">
 				</el-input>
 			</el-form-item>
 			<el-form-item prop="password">
@@ -64,13 +68,15 @@
 				}
 				return cb();
 			}
+			
 
 
 			return {
 				userRegistParam: {
-					username: '',
+					name: '',
 					phone: '',
 					email: '',
+					idCard:'',
 					password: '',
 					conpwd: '',
 				},
@@ -85,17 +91,11 @@
 				// },
 
 				rules: {
-					username: [{
+					name: [{
 							required: true,
-							message: '请输入用户名',
+							message: '请输入姓名',
 							trigger: 'blur'
 						},
-						{
-							min: 6,
-							max: 20,
-							message: '账号必须为6-20个字符',
-							trigger: ['blur', 'change']
-						}
 					],
 
 					phone: [{
@@ -118,6 +118,18 @@
 						{
 							pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
 							message: "邮箱格式错误",
+							trigger: ['blur', 'change'],
+						}
+					],
+					
+					idCard: [{
+							required: true,
+							message: '请输入身份证号码',
+							trigger: 'blur'
+						},
+						{
+							pattern: /^[1-9]\d{5}(18|19|20|(3\d))\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/,
+							message: "身份证格式错误",
 							trigger: ['blur', 'change'],
 						}
 					],
