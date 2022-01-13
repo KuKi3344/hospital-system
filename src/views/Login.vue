@@ -123,7 +123,7 @@
 							//没有用封装的方法是因为路由特殊所以需要单独写
 							this.postRequest('/login',this.submitParam).then(resp => {
 								this.loading = false;
-								if (resp) {
+								if (resp.data) {
 									this.setCookieValue("userid",resp.data.id);
 									//跳转首页
 									this.$router.replace('/Home')

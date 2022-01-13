@@ -173,12 +173,9 @@
 				this.$refs.userRegistParam.validate((valid) => {
 					console.log(this.checktime)
 					if (valid) {
-						// //没有用封装的方法是因为路由特殊所以需要单独写
-						// this.postRequest('/login',this.userLoginParam).then(resp=>{
-						// 	this.loading = false;
-						// 	if(resp){
+						this.postRequest('/register',this.userRegistParam).then(resp=>{
 							this.$router.push('/Login');
-
+						})
 					} else {
 						this.$message.error('输入格式错误，请检查！')
 					}

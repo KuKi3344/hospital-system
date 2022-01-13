@@ -148,7 +148,7 @@
 			this.getRequest('/api/user/select/one/' + this.userid).then(resp => {
 				this.user = resp.data;
 				this.setCookieValue("roleid", this.user.roleMark);
-				if(this.user.remark==''){
+				if(this.user.remark==''|| this.user.remark==null){
 					this.remark = '暂无'
 				}else{
 					this.remark = this.user.remark;
@@ -167,9 +167,7 @@
 			},
 			clickedit() {
 				this.getRequest('/api/user/select/one/' + this.userid).then(resp => {
-					this.user = resp.data;
 					this.editList = resp.data;
-					this.setCookieValue("roleid", this.user.roleMark)
 					this.showedit = true;
 				})
 			},
@@ -186,6 +184,7 @@
 					}
 					this.setCookieValue("roleid", this.user.roleMark)
 					this.showedit = false;
+					console.log(this.editList)
 				})
 				
 			},
