@@ -7,7 +7,7 @@
 		</vue-particles>
 
 		<el-container>
-			<el-header style="min-width:500px;">
+			<el-header style="min-width:800px;z-index: 999;">
 				<div class="titleleft"> DLNU门诊挂号系统</div>
 				<div class="right">
 					<span id="nav">&emsp;今日气温:</span>
@@ -23,7 +23,7 @@
 					</el-dropdown>
 				</div>
 			</el-header>
-			<el-container style="display: flex;justify-content: space-around;align-items:center;min-width:1000px;">
+			<el-container style="display: flex;justify-content: space-around;align-items:center;min-width:800px;">
 				<el-aside style="flex:1;min-width: 300px;">
 					<el-descriptions direction="horizontal" :column="1" title="用户信息" size="medium">
 						<template slot="extra">
@@ -74,8 +74,10 @@
 					</el-dialog>
 					
 				</el-aside>
-				<el-main style="flex:2">
-					<userview></userview>
+				<el-main style="flex:2;height:600px;">
+					<userview v-show="rolemark == 'person'"></userview>
+					<doctorview v-show="rolemark == 'doctor'"></doctorview>
+					<adminview v-show="rolemark == 'admin'"></adminview>
 				</el-main>
 			</el-container>
 		</el-container>
@@ -99,6 +101,7 @@
 				showedit: false,
 				editList:{},
 				remark:'',
+				rolemark:'',
 			}
 		},
 		components: {
@@ -145,9 +148,9 @@
 			}
 			
 			this.userid = this.getCookieValue("userid");
+			this.rolemark = this.getCookieValue('rolemark');
 			this.getRequest('/api/user/select/one/' + this.userid).then(resp => {
 				this.user = resp.data;
-				this.setCookieValue("roleid", this.user.roleMark);
 				if(this.user.remark==''|| this.user.remark==null){
 					this.remark = '暂无'
 				}else{
@@ -159,7 +162,7 @@
 			commandHandler(command) {
 				if (command == 'exit') {
 					this.postRequest('/logout').then(resp => {
-						this.clearCookie("roleid");
+						this.clearCookie("rolemark");
 						this.clearCookie("userid");
 						this.$router.replace('/Login');
 					})
@@ -182,7 +185,7 @@
 					else{
 						this.remark = this.user.remark;
 					}
-					this.setCookieValue("roleid", this.user.roleMark)
+					this.setCookieValue("rolemark", this.user.roleMark)
 					this.showedit = false;
 					console.log(this.editList)
 				})
@@ -192,7 +195,7 @@
 				this.showedit = false;
 				this.getRequest('/api/user/select/one/' + this.userid).then(resp => {
 					this.user = resp.data;
-					this.setCookieValue("roleid", this.user.roleMark)
+					this.setCookieValue("rolemark", this.user.roleMark)
 				})
 			}
 		}
