@@ -125,6 +125,7 @@
 								this.loading = false;
 								if (resp.data) {
 									this.setCookieValue("userid",resp.data.id);
+									this.setCookieValue("rolemark", resp.data.roleMark);
 									//跳转首页
 									this.$router.replace('/Home')
 								}

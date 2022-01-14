@@ -86,7 +86,7 @@
 				// 		let _now = Date.now(),
 				// 		seven = 7* 24 *60 *60 *1000,
 				// 		sevenDays = _now + seven;
-				// 		return time.getTime() < _now || time.getTime() > sevenDays
+				// 		return time.getTime() <= _now || time.getTime() > sevenDays
 				// 	}
 				// },
 
