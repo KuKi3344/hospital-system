@@ -11,28 +11,28 @@
 		height:100%;
 		z-index:-1;
 		}
-	::-webkit-scrollbar {
-		width: 10px;
-		height: 10px;
-		border-radius: 15px;
-		-webkit-border-radius: 15px;
-	}
-	::-webkit-scrollbar-track-piece {
-		border-radius: 15px;
-		-webkit-border-radius: 15px;
-	}
-	::-webkit-scrollbar-thumb:vertical {
-		height: 8px;
-		background-color: rgba(68, 68, 68,0.5);
-		border-radius: 15px;
-		-webkit-border-radius: 15px;
-	}
-	::-webkit-scrollbar-thumb:horizontal {
-		width: 10px;
-		background-color: gba(68, 68, 68, 0.5);
-		border-radius: 15px;
-		-webkit-border-radius: 15px;
-	}
+::-webkit-scrollbar
+{
+    width:10px;
+    height:10px;
+    background-color:#F5F5F5;
+}
+/*定义滚动条轨道
+ 内阴影+圆角*/
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow:inset 0 0 6px rgba(61, 61, 61, 0.2);
+    border-radius:10px;
+    background-color:#F5F5F5;
+}
+/*定义滑块
+ 内阴影+圆角*/
+::-webkit-scrollbar-thumb
+{
+    border-radius:10px;
+    -webkit-box-shadow:inset 0 0 6px rgba(59, 59, 59, 0.2);
+    background-color:#7c7c7c;
+}
 	[v-cloak] {
 		display: none !important;
 	}
