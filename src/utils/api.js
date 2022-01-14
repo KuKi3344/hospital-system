@@ -1,13 +1,8 @@
 import axios from 'axios'
 import { Message } from 'element-ui';
 import router from '../router'
-import {
-	getCookieValue,
-	setCookieValue,
-	clearCookie
-}from '../assets/js/cookie_utils.js'
 
-//请求拦截器
+//请求拦截器 因为自动携带所以不需要
 // axios.interceptors.request.use(config=>{
 // 	//如果存在token，请求携带这个token
 // 	if(getCookieValue("oars-token")){
