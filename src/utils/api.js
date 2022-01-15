@@ -16,7 +16,7 @@ import router from '../router'
 axios.interceptors.response.use((success)=>{
 	//业务逻辑错误
 	if (success.status&&success.status==200){
-		if(success.data.code==500||success.data.code==401||success.data.code==403){
+		if(success.data.code==500||success.data.code==401||success.data.code==403||success.data.code==10001){
 			// 如果业务逻辑错误或者未登录或者权限禁止
 			Message.error({message:success.data.message});
 			return;
@@ -31,10 +31,12 @@ axios.interceptors.response.use((success)=>{
 	}else if(error.response.code == 401){
 		Message.error({message:'尚未登陆，请登录'});
 		router.replace('/Login');
-	}else{
+	}
+	else{
 		if(error.response.data.message){
 			Message.error({message:error.response.data.message});
-		}else{
+		} 
+		else{
 			Message.error({message:'未知错误！'});
 		}
 	}

@@ -30,13 +30,6 @@
 				<el-input type="password" auto-complete="false" v-model="userRegistParam.conpwd" placeholder="请再次确认密码">
 				</el-input>
 			</el-form-item>
-			
-<!-- 			<el-date-picker
-			      v-model="checktime"
-			      type="date"
-			      placeholder="选择日期"
-				  :picker-options="getTime">
-			    </el-date-picker> -->
 
 			<el-button type="primary" style="width:100%;margin-top: 15px;" @click="dosubmit" round>提交</el-button>
 		</el-form>
@@ -80,15 +73,7 @@
 					password: '',
 					conpwd: '',
 				},
-				// checktime:'',
-				// getTime:{
-				// 	disabledDate(time){
-				// 		let _now = Date.now(),
-				// 		seven = 7* 24 *60 *60 *1000,
-				// 		sevenDays = _now + seven;
-				// 		return time.getTime() <= _now || time.getTime() > sevenDays
-				// 	}
-				// },
+				
 
 				rules: {
 					name: [{

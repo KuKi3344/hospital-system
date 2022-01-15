@@ -74,7 +74,7 @@
 					</el-dialog>
 					
 				</el-aside>
-				<el-main style="flex:2;height:600px;">
+				<el-main style="flex:2;height:650px;">
 					<userview v-show="rolemark == 'person'"></userview>
 					<doctorview v-show="rolemark == 'doctor'"></doctorview>
 					<adminview v-show="rolemark == 'admin'"></adminview>
