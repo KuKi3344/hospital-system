@@ -210,7 +210,7 @@
 	}
 </script>
 
-<style scoped="scoped">
+<style>
 	.el-input,
 	.el-select{
 		flex:1;

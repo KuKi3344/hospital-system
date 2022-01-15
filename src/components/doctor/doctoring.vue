@@ -2,17 +2,17 @@
 	<div>
 		<el-table v-loading="loading" :data="dataList" height="480" border style="width:100%; border-radius:10px;font-size: 13px;"
 			:header-cell-style="{background:'#eef1f4',color:'#606266'}">
-			<el-table-column prop="registration.id" label="问诊单id" width="150" height="40">
+			<el-table-column prop="id" label="问诊单id" width="150" height="40">
 			</el-table-column>
-			<el-table-column prop="person.name" label="预约病人姓名" width="150" height="40">
+			<el-table-column prop="personName" label="预约病人姓名" width="150" height="40">
 			</el-table-column>
-			<el-table-column prop="registration.subDate" label="预约日期" width="150" height="40">
+			<el-table-column prop="subDate" label="预约日期" width="150" height="40">
 			</el-table-column>
-			<el-table-column prop="registration.handleBegainDate" label="问诊处理日期" width="150" height="40">
+			<el-table-column prop="handleBegainDate" label="问诊处理日期" width="150" height="40">
 			</el-table-column>
-			<el-table-column prop="registration.enquiryStatus" label="问诊状态" width="150" height="40">
+			<el-table-column prop="enquiryStatus" label="问诊状态" width="150" height="40">
 				<template slot-scope="scope">
-					<el-tag type="danger">{{scope.row.registration.enquiryStatus}}</el-tag>
+					<el-tag type="danger">{{scope.row.enquiryStatus}}</el-tag>
 				</template>
 			</el-table-column>
 	

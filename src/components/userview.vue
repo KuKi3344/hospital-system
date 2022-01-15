@@ -18,42 +18,42 @@
 		<el-table v-loading="loading" :data="dataList" height="480" border
 			style="width:100%; border-radius:10px;font-size: 13px;"
 			:header-cell-style="{background:'#eef1f4',color:'#606266'}">
-			<el-table-column prop="registration.id" label="挂号单id" width="120" height="40">
+			<el-table-column prop="id" label="挂号单id" width="120" height="40">
 			</el-table-column>
-			<el-table-column prop="doctor.name" label="预约医生姓名" width="125" height="40">
+			<el-table-column prop="doctorName" label="预约医生姓名" width="125" height="40">
 			</el-table-column>
-			<el-table-column prop="registration.subDate" label="挂号预约日期" width="130" height="40">
+			<el-table-column prop="subDate" label="挂号预约日期" width="130" height="40">
 			</el-table-column>
-			<el-table-column prop="registration.handleDate" label="问诊处理日期" width="130" height="40">
+			<el-table-column prop="handleDate" label="问诊处理日期" width="130" height="40">
 			</el-table-column>
-			<el-table-column prop="registration.registStatus" label="挂号状态" width="100" height="40">
+			<el-table-column prop="registStatus" label="挂号状态" width="100" height="40">
 				<template slot-scope="scope">
-					<el-tag type="success" v-if="scope.row.registration.registStatus=='挂号成功'">
-						{{scope.row.registration.registStatus}}
+					<el-tag type="success" v-if="scope.row.registStatus=='挂号成功'">
+						{{scope.row.registStatus}}
 					</el-tag>
-					<el-tag type="info" v-else>{{scope.row.registration.registStatus}}</el-tag>
+					<el-tag type="info" v-else>{{scope.row.registStatus}}</el-tag>
 				</template>
 			</el-table-column>
-			<el-table-column prop="registration.enquiryStatus" label="问诊状态" width="100" height="40">
+			<el-table-column prop="enquiryStatus" label="问诊状态" width="100" height="40">
 				<template slot-scope="scope">
-					<el-tag type="info" v-if="scope.row.registration.enquiryStatus=='取消问诊'">
-						{{scope.row.registration.enquiryStatus}}
+					<el-tag type="info" v-if="scope.row.enquiryStatus=='取消问诊'">
+						{{scope.row.enquiryStatus}}
 					</el-tag>
-					<el-tag type="success" v-else-if="scope.row.registration.enquiryStatus=='问诊结束'">
-						{{scope.row.registration.enquiryStatus}}
+					<el-tag type="success" v-else-if="scope.row.enquiryStatus=='问诊结束'">
+						{{scope.row.enquiryStatus}}
 					</el-tag>
-					<el-tag type="danger" v-else-if="scope.row.registration.enquiryStatus=='未问诊'">
-						{{scope.row.registration.enquiryStatus}}
+					<el-tag type="danger" v-else-if="scope.row.enquiryStatus=='未问诊'">
+						{{scope.row.enquiryStatus}}
 					</el-tag>
-					<el-tag v-else>{{scope.row.registration.enquiryStatus}}</el-tag>
+					<el-tag v-else>{{scope.row.enquiryStatus}}</el-tag>
 				</template>
 			</el-table-column>
 
 			<el-table-column label="操作" width="250" height="40">
 
 				<template slot-scope="scope">
-					<el-button type="primary" size="small" @click="updatelist(scope.row.registration.id)">编辑</el-button>
-					<el-button type="danger" size="small" @click="concellist(scope.row.registration.id)">取消</el-button>
+					<el-button type="primary" size="small" @click="updatelist(scope.row.id)">编辑</el-button>
+					<el-button type="danger" size="small" @click="concellist(scope.row.id)">取消</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
