@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<div style="display: flex;justify-content: space-between;">
-			<el-input size="mini" v-model="searchList.userid" placeholder="请输入查询id"></el-input>
-			<el-input  size="mini" v-model="searchList.useremail" placeholder="请输入查询邮箱"></el-input>
-			<el-input  size="mini" v-model="searchList.userphone" placeholder="请输入查询电话"></el-input>
-			<el-select  size="mini" v-model="searchList.userrolemark" clearable placeholder="请选择查询权限">
+			<el-input size="mini" v-model="searchList.id" placeholder="请输入查询id"></el-input>
+			<el-input  size="mini" v-model="searchList.email" placeholder="请输入查询邮箱"></el-input>
+			<el-input  size="mini" v-model="searchList.phone" placeholder="请输入查询电话"></el-input>
+			<el-select  size="mini" v-model="searchList.roleMark" clearable placeholder="请选择查询权限">
 				<el-option key="person" label="person" value="person"></el-option>
 				<el-option key="admin"  label="admin" value="admin"></el-option>
 				<el-option key="doctor" label="doctor" value="doctor"></el-option>
@@ -124,7 +124,7 @@
 				loading: true,
 				dataList: [],
 				searchList:{
-					userid: null,
+					id: null,
 					userphone:null,
 					useremail: null,
 					userrolemark: null
@@ -210,7 +210,7 @@
 	}
 </script>
 
-<style>
+<style scoped="scoped">
 	.el-input,
 	.el-select{
 		flex:1;

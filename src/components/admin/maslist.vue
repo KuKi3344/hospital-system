@@ -5,7 +5,6 @@
 			<el-select  size="mini" v-model="searchList.registerStatus" clearable placeholder="请选择查询预约状态">
 				<el-option key="挂号成功" label="挂号成功" value="挂号成功"></el-option>
 				<el-option key="挂号取消"  label="挂号取消" value="挂号取消"></el-option>
-				<el-option key="待处理" label="待处理" value="待处理"></el-option>
 			</el-select>
 			<el-select  size="mini" v-model="searchList.enquiryStatus" clearable placeholder="请选择查询问诊状态">
 				<el-option key="未问诊" label="未问诊" value="未问诊"></el-option>
@@ -85,7 +84,11 @@
 						}
 					}
 					this.$axios.get('/api/pdr/query/all',{
-							params: this.searchList
+							params: {
+								subDate: this.searchList.subDate,
+								registerStatus: this.searchList.registerStatus,
+								enquiryStatus: this.searchList.enquiryStatus,
+							}
 					}).then(resp=>{
 							this.dataList = resp.data;
 					})
