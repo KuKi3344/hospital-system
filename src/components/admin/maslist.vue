@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<div style="display: flex;justify-content: space-between;">
-			<el-input size="mini" v-model="searchList.subDate" placeholder="请输入查询的问诊预约日期"></el-input>
+		<el-input size="mini" v-model="searchList.subDate.begin" placeholder="请输入查询的问诊预约日期(范围开始)"></el-input>
+		<el-input size="mini" v-model="searchList.subDate.end" placeholder="请输入查询的问诊预约日期(范围结束)"></el-input>
 			<el-select  size="mini" v-model="searchList.registerStatus" clearable placeholder="请选择查询预约状态">
 				<el-option key="挂号成功" label="挂号成功" value="挂号成功"></el-option>
 				<el-option key="挂号取消"  label="挂号取消" value="挂号取消"></el-option>
@@ -60,9 +61,17 @@
 					loading:true,
 					dataList:[],
 					searchList:{
-						subDate:'',
-						registerStatus:'',
-						enquiryStatus:'',
+						subDate:{
+							begin:'',
+							end:'',
+						},
+						enquiryStatus:'',				
+					},
+					findlist:{
+						subDate:{
+							begin:'',
+							end:'',
+						},
 					}
 					
 				}
@@ -78,20 +87,32 @@
 			},
 			methods:{
 				search(){
-					for(var item in this.searchList){
-						if(this.searchList[item] == ""){
-							this.searchList[item] = null;
-						}
+					let id = this.getCookieValue("userid");
+					if(this.searchList.subDate.begin == ''){
+						this.findlist.subDate.begin ='2000-01-01' ;
+					}else{
+						this.findlist.subDate.begin = this.searchList.subDate.begin;
 					}
-					this.$axios.get('/api/pdr/query/all',{
-							params: {
-								subDate: this.searchList.subDate,
-								registerStatus: this.searchList.registerStatus,
-								enquiryStatus: this.searchList.enquiryStatus,
-							}
-					}).then(resp=>{
-							this.dataList = resp.data;
-					})
+					if(this.searchList.subDate.end == ''){
+						this.findlist.subDate.end ='2100-01-01';
+					}else{
+						this.findlist.subDate.end = this.searchList.subDate.end;
+					}
+					if(this.findlist.subDate.end<this.findlist.subDate.begin){
+						alert('结束日期不能小于开始日期')
+						this.searchList.subDate.end = '';
+						this.searchList.subDate.begin = '';
+					}
+					console.log(this.searchList)
+					if(this.searchList.enquiryStatus != ""){
+						this.$axios.get(`/api/pdr/query/all?id=${id}&subDate=${this.findlist.subDate.begin}&subDate=${this.findlist.subDate.end}&enquiryStatus=${this.searchList.enquiryStatus}`).then(resp=>{
+								this.dataList = resp.data;
+						})
+					}else{
+						this.$axios.get(`/api/pdr/query/all?id=${id}&subDate=${this.findlist.subDate.begin}&subDate=${this.findlist.subDate.end}`).then(resp=>{
+								this.dataList = resp.data;
+						})
+					}
 				},
 			}
 		}

@@ -75,9 +75,9 @@
 					
 				</el-aside>
 				<el-main style="flex:2;height:650px;">
-					<userview v-show="rolemark == 'person'"></userview>
-					<doctorview v-show="rolemark == 'doctor'"></doctorview>
-					<adminview v-show="rolemark == 'admin'"></adminview>
+					<adminview v-if="rolemark == 'admin'"></adminview>
+					<doctorview v-else-if="rolemark == 'doctor'"></doctorview>
+					<userview v-else></userview>
 				</el-main>
 			</el-container>
 		</el-container>

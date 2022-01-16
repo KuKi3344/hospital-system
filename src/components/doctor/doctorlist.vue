@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<div style="display: flex;justify-content: space-between;">
-			<el-input size="mini" v-model="searchList.subDate" placeholder="请输入查询的问诊预约日期"></el-input>
+			<el-input size="mini" v-model="searchList.subDate.begin" placeholder="请输入查询的问诊预约日期(范围开始)"></el-input>
+			<el-input size="mini" v-model="searchList.subDate.end" placeholder="请输入查询的问诊预约日期(范围结束)"></el-input>
 			<el-select  size="mini" v-model="searchList.enquiryStatus" clearable placeholder="请选择查询问诊状态">
 				<el-option key="未问诊" label="未问诊" value="未问诊"></el-option>
 				<el-option key="正在问诊"  label="正在问诊" value="正在问诊"></el-option>
@@ -12,11 +13,11 @@
 		</div>
 		<el-table v-loading="loading" :data="dataList" height="480" border style="width:100%; border-radius:10px;font-size: 13px;"
 			:header-cell-style="{background:'#eef1f4',color:'#606266'}">
-			<el-table-column prop="id" label="问诊单id" width="150" height="40">
+			<el-table-column prop="id" label="问诊单id" width="175" height="40">
 			</el-table-column>
 			<el-table-column prop="personName" label="预约病人姓名" width="150" height="40">
 			</el-table-column>
-			<el-table-column prop="subDate" label="预约日期" width="150" height="40">
+			<el-table-column prop="subDate" label="预约日期" width="180" height="40">
 			</el-table-column>
 			<el-table-column prop="handleBegainDate" label="问诊处理日期" width="150" height="40">
 			</el-table-column>
@@ -47,10 +48,18 @@
 				loading: true,
 				dataList: [],
 				searchList:{
-					subDate:null,
-					enquiryStatus:null
-					
+					subDate:{
+						begin:'',
+						end:'',
+					},
+					enquiryStatus:'',				
 				},
+				findlist:{
+					subDate:{
+						begin:'',
+						end:'',
+					},
+				}
 	
 			}
 		},
@@ -71,21 +80,31 @@
 		methods:{
 			search(){
 				let id = this.getCookieValue("userid");
-				for(var item in this.searchList){
-					if(this.searchList[item] == ""){
-						this.searchList[item] = null;
-					}
+				if(this.searchList.subDate.begin == ''){
+					this.findlist.subDate.begin ='2000-01-01' ;
+				}else{
+					this.findlist.subDate.begin = this.searchList.subDate.begin;
+				}
+				if(this.searchList.subDate.end == ''){
+					this.findlist.subDate.end ='2100-01-01';
+				}else{
+					this.findlist.subDate.end = this.searchList.subDate.end;
+				}
+				if(this.findlist.subDate.end<this.findlist.subDate.begin){
+					alert('结束日期不能小于开始日期')
+					this.searchList.subDate.end = '';
+					this.searchList.subDate.begin = '';
 				}
 				console.log(this.searchList)
-				this.$axios.get('/api/pdr/query/doctor',{
-						params: {
-							id: id,
-							subDate:this.searchList.subDate,
-							enquiryStatus: this.searchList.enquiryStatus,						
-						}
-				}).then(resp=>{
-						this.dataList = resp.data;
-				})
+				if(this.searchList.enquiryStatus != ""){
+					this.$axios.get(`/api/pdr/query/doctor?id=${id}&subDate=${this.findlist.subDate.begin}&subDate=${this.findlist.subDate.end}&enquiryStatus=${this.searchList.enquiryStatus}`).then(resp=>{
+							this.dataList = resp.data;
+					})
+				}else{
+					this.$axios.get(`/api/pdr/query/doctor?id=${id}&subDate=${this.findlist.subDate.begin}&subDate=${this.findlist.subDate.end}`).then(resp=>{
+							this.dataList = resp.data;
+					})
+				}
 			},
 		}
 	}
