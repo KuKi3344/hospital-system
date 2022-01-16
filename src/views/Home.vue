@@ -27,9 +27,9 @@
 				<el-aside style="flex:1;min-width: 300px;">
 					<el-descriptions direction="horizontal" :column="1" title="用户信息" size="medium">
 						<template slot="extra">
-							<el-button type="primary" size="medium" style="margin-right: 25px;" @click="clickedit">编辑资料
+							<el-button type="primary" size="small" style="margin-right: 15px;margin-bottom:10px;" @click="clickedit">编辑资料
 							</el-button>
-							<el-button type="primary" size="medium" style="margin-right: 25px;" @click="changepwd">修改密码
+							<el-button type="primary" size="small" style="margin-right: 15px;" @click="changepwd">修改密码
 							</el-button>
 						</template>
 						<el-descriptions-item label="用户名">{{user.name}}</el-descriptions-item>
@@ -75,6 +75,22 @@
 						</div>
 					</el-dialog>
 					
+					<el-dialog style="width: 900px;height:900px;" title="修改密码" :visible.sync="showeditpwd"
+						append-to-body top="10px">
+						<el-form>
+							<el-form-item label="新密码">
+								<el-input type="password"  auto-complete="false"  class="dialog_input" v-model="editpwd.password"></el-input>
+							</el-form-item>
+							<el-form-item label="再次输入新密码" width="150px">
+								<el-input type="password"  auto-complete="false"  class="dialog_input" v-model="editcpwd"></el-input>
+							</el-form-item>
+						</el-form>
+					
+						<div slot="footer" class="dialog-footer">
+							<el-button @click="flushed">取 消</el-button>
+							<el-button type="primary" @click="modify">确 定</el-button>
+						</div>
+					</el-dialog>
 				</el-aside>
 				<el-main style="flex:2;height:650px;">
 					<adminview v-if="rolemark == 'admin'"></adminview>
@@ -104,6 +120,12 @@
 				editList:{},
 				remark:'',
 				rolemark:'',
+				showeditpwd:false,
+				editpwd:{
+					id:'',
+					password:''
+				},
+				editcpwd:'',
 			}
 		},
 		components: {
@@ -201,7 +223,34 @@
 				})
 			},
 			changepwd(){
-				
+				this.showeditpwd = true;
+			},
+			modify(){
+				if(this.editcpwd!=this.editpwd.password){
+					 this.$message({
+					          message: '两次密码输入不同，请重试！',
+					          type: 'warning'
+					        });
+				}else{
+					if (this.editpwd.password.length > 5) {
+						
+						var modes = 0;
+						//正则表达式验证符合要求的
+						if (/\d/.test(this.editpwd.password)) modes++; //数字
+						if (/[A-z]/.test(this.editpwd.password)) modes++; //小写
+						if (/\W/.test(this.editpwd.password)) modes++; //特殊字符					
+						if (modes == 1) {
+							this.$message.error('密码强度过低，请至少包含大小写字母，数字以及特殊字符中任意两种');							
+						}else{
+							this.editpwd.id = this.userid;
+							this.$axios.put('/api/user/update/password',this.editpwd).then(resp=>{
+								this.$router.replace('/Login');
+							})
+						}
+					} else {
+						this.$message.error('密码长度不能低于6位');
+					}
+				}
 			}
 		}
 
