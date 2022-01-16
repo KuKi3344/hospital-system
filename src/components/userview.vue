@@ -114,7 +114,7 @@
 						begin:'',
 						end:''
 					},
-					enquiryStatus: null
+					enquiryStatus: ''
 				},
 				addview: false,
 				editview: false,
@@ -191,7 +191,7 @@
 					this.searchList.subDate.begin = '';
 				}
 				console.log(this.searchList)
-				if(this.searchList.enquiryStatus != ""){
+				if(this.searchList.enquiryStatus!= ""){
 					this.$axios.get(`/api/pdr/query/person?id=${id}&subDate=${this.findlist.subDate.begin}&subDate=${this.findlist.subDate.end}&enquiryStatus=${this.searchList.enquiryStatus}`).then(resp=>{
 							this.dataList = resp.data;
 					})
@@ -284,5 +284,9 @@
 	.choose {
 		margin-bottom: 20px;
 		width: 300px;
+	}
+	.el-input{
+		flex:1;
+		margin-right:10px;
 	}
 </style>

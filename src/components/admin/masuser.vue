@@ -210,9 +210,12 @@
 	}
 </script>
 
-<style>
+<style scoped="scoped">
 	.el-input,
 	.el-select{
 		flex:1;
 	}
+	.el-input{
+		margin-right:10px;
+		}
 </style>

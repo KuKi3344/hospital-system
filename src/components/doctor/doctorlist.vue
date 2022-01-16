@@ -110,5 +110,12 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	.el-input{
+		margin-right:10px;
+		flex:1;
+	}
+	.el-select{
+		flex:1;
+	}
 </style>

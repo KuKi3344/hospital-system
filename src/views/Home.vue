@@ -27,7 +27,9 @@
 				<el-aside style="flex:1;min-width: 300px;">
 					<el-descriptions direction="horizontal" :column="1" title="用户信息" size="medium">
 						<template slot="extra">
-							<el-button type="primary" size="medium" style="margin-right: 25px;" @click="clickedit">编辑
+							<el-button type="primary" size="medium" style="margin-right: 25px;" @click="clickedit">编辑资料
+							</el-button>
+							<el-button type="primary" size="medium" style="margin-right: 25px;" @click="changepwd">修改密码
 							</el-button>
 						</template>
 						<el-descriptions-item label="用户名">{{user.name}}</el-descriptions-item>
@@ -197,6 +199,9 @@
 					this.user = resp.data;
 					this.setCookieValue("rolemark", this.user.roleMark)
 				})
+			},
+			changepwd(){
+				
 			}
 		}
 
